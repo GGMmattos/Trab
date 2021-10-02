@@ -18,15 +18,19 @@ int input(char str[], int size) {
 
 int main(int argc, char *argv[]) {
 
-    FILE * entrada;
+    FILE * arq;
     char nome_arq[20];
 
-    printf("Informe o nome do arquivo de registros: ");
-    input(nome_arq, 20);
-
-
+    
     if (argc == 3 && strcmp(argv[1], "-i") == 0) {
+            printf("Informe o nome do arquivo de registros: ");
+            input(nome_arq, 20);
 
+        if ((arq = fopen(nome_arq, "rb")) == NULL){
+            fprintf(stderr, "Erro, nao foi possivel abrir o arquivo '%s'", nome_arq);
+            exit(EXIT_FAILURE);
+        }   
+    
         printf("Modo de importacao ativado ... nome do arquivo = %s\n", argv[2]);
         // importacao(argv[2]);
 
