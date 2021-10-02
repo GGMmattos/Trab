@@ -2,7 +2,28 @@
 #include <stdlib.h>
 #include <string.h>
 
+int input(char str[], int size) {
+    int i = 0;
+    char c = getchar();
+    while (c != '\n') {
+        if (i < size-1) {
+            str[i] = c;
+            i++;
+        }
+        c = getchar();
+    }
+    str[i] = '\0';
+    return i;
+}
+
 int main(int argc, char *argv[]) {
+
+    FILE * entrada;
+    char nome_arq[20];
+
+    printf("Informe o nome do arquivo de registros: ");
+    input(nome_arq, 20);
+
 
     if (argc == 3 && strcmp(argv[1], "-i") == 0) {
 
