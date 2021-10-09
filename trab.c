@@ -16,9 +16,14 @@ int input(char str[], int size) {
     return i;
 }
 
+void importação(FILE * dados){
+    
+}
+
 int main(int argc, char *argv[]) {
 
     FILE * arq;
+    FILE * data;
     char nome_arq[20];
 
     
@@ -32,7 +37,44 @@ int main(int argc, char *argv[]) {
         }   
     
         printf("Modo de importacao ativado ... nome do arquivo = %s\n", argv[2]);
+
+        if ((data = fopen("dados.dat", "w+b"))==NULL)
+            perror("O arquivo não pode ser aberto");
+
+        
         // importacao(argv[2]);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     } else if (argc == 3 && strcmp(argv[1], "-e") == 0) {
 
