@@ -44,14 +44,14 @@ void importacao(char *argv){
     FILE * candidatos;
     FILE * dados;
 
-    candidatos = fopen(argv,"r");
-    dados = fopen("dados.txt","w+");
+    candidatos = fopen(argv,"r+b");
+    dados = fopen("dados.txt","w+b");
 
     if((candidatos) && (dados)){
         printf("Arquivos abertos com sucesso!");
         cab.cont_reg = 0;
         fwrite(&cab,sizeof(cab),1,dados); //prepara o arquivo vazio
-        
+
         //fread(&cab,sizeof(cab),1,candidatos);
         //fwrite(&candidatos,sizeof(char),COMP_REG,dados);
 
