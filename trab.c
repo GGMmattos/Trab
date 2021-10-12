@@ -45,12 +45,13 @@ void importacao(char *argv){
     FILE * dados;
 
     candidatos = fopen(argv,"r");
-    dados = fopen("dados.txt","w");
+    dados = fopen("dados.txt","w+");
 
-    if((candidatos) || (dados)){
+    if((candidatos) && (dados)){
         printf("Arquivos abertos com sucesso!");
         cab.cont_reg = 0;
         fwrite(&cab,sizeof(cab),1,dados); //prepara o arquivo vazio
+        
         //fread(&cab,sizeof(cab),1,candidatos);
         //fwrite(&candidatos,sizeof(char),COMP_REG,dados);
 
@@ -62,7 +63,7 @@ int main(int argc, char *argv[]) {
 
     
     char nome_arq[20];
-   // char buffer[COMP_REG + 1];
+    // char buffer[COMP_REG + 1];
     //char *campo;
 
     
