@@ -45,18 +45,18 @@ void importacao(char *argv){
     FILE * dados;
 
     candidatos = fopen(argv,"r");
-    dados = fopen("dados.dat","w");
+    dados = fopen("dados.txt","w");
 
-    if((candidatos) ||(dados)){
+    if((candidatos) || (dados)){
         printf("Arquivos abertos com sucesso!");
+        cab.cont_reg = 0;
+        fwrite(&cab,sizeof(cab),1,dados); //prepara o arquivo vazio
+        //fread(&cab,sizeof(cab),1,candidatos);
+        //fwrite(&candidatos,sizeof(char),COMP_REG,dados);
 
     }else
-        printf("Erro na abertura dos arquivos");
-
-
+        fprintf(stderr, "Erro na abertura dos arquivos");
 }
-    
-
 
 int main(int argc, char *argv[]) {
 
@@ -70,9 +70,6 @@ int main(int argc, char *argv[]) {
         printf("Informe o nome do arquivo de registros: ");
         input(nome_arq, 20);       
         importacao(argv[2]);
-
-    
-    
     
  } else if (argc == 3 && strcmp(argv[1], "-e") == 0) {
 
