@@ -40,39 +40,37 @@ struct{
     int cont_reg;
 }cab; // cabeçalho do arquivo ( 4 bytes)
 
+void importacao(char *argv){
+    FILE * candidatos;
+    FILE * dados;
 
-//void importação(FILE * dados){
+    candidatos = fopen(argv,"r");
+    dados = fopen("dados.dat","w");
+
+    if((candidatos) ||(dados)){
+        printf("Arquivos abertos com sucesso!");
+
+    }else
+        printf("Erro na abertura dos arquivos");
+
+
+}
     
 
 
 int main(int argc, char *argv[]) {
 
-    FILE * arq;
-    //FILE * dados;
+    
     char nome_arq[20];
-    char buffer[COMP_REG + 1];
-    int comp_reg, i, j, byte_offset;
-    char *campo;
-    char nome_arq[20];
-    char campo[20];
-    short comp_reg;
-    char *nome_campos[] = {"Nome", "Endereco", "Cidade", "Estado", "CEP"};
+   // char buffer[COMP_REG + 1];
+    //char *campo;
 
     
     if (argc == 3 && strcmp(argv[1], "-i") == 0) {
-            printf("Informe o nome do arquivo de registros: ");
-            input(nome_arq, 20);
+        printf("Informe o nome do arquivo de registros: ");
+        input(nome_arq, 20);       
+        importacao(argv[2]);
 
-       if ((arq = fopen(nome_arq, "r+b")) == NULL) {
-        arq = fopen(nome_arq, "w+b");
-        cab.cont_reg = 0;
-        fwrite(&cab, sizeof(cab), 1, arq);
-    } else {
-        fread(&cab, sizeof(cab), 1, arq);
-    }
-   
-
-                                          
     
     
     
