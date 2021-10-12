@@ -1,9 +1,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <string.h>
-#include <stdlib.h>
+#include <locale.h> 
 #define COMP_REG 64
+
+//char tam_camp ;
+char tam_camp [COMP_REG - 4];
 
 int input(char str[], int size) {
     int i = 0;
@@ -22,7 +24,7 @@ int input(char str[], int size) {
 short leia_reg(char buffer[], int tam, FILE *entrada) {
 
     short comp_reg;
-    
+
     if (fread(&comp_reg, sizeof(short), 1, entrada) == 0) {
         return 0;
     }
@@ -36,48 +38,77 @@ short leia_reg(char buffer[], int tam, FILE *entrada) {
     }
 }
 
+
 struct{
     int cont_reg;
 }cab; // cabeçalho do arquivo ( 4 bytes)
 
+int passa_arq(char campo[], int tam, FILE *file){
+    int i = 0;
+    char k = fgetc(file);
+
+    while (k != '|' && k != EOF)
+    {
+        if (i < tam-1){
+            campo[i++] = k;
+        }
+        k = fgetc(file);
+    }
+
+    campo[i] = 0;
+    return i;
+
+}
 void importacao(char *argv){
     FILE * candidatos;
     FILE * dados;
 
-    candidatos = fopen(argv,"r+b");
-    dados = fopen("dados.dat","w+b");
+    char buffer[COMP_REG +1], campo[COMP_REG - 4];
+    int cont = 0;
 
-    if((candidatos) && (dados)){
+    candidatos = fopen(argv,"rb");
+    dados = fopen("dados.dat","wb");
+
+    // if((candidatos) && (dados)){
         printf("Arquivos abertos com sucesso!");
-        cab.cont_reg = 0;
-        fwrite(&cab,sizeof(cab),1,dados); //prepara o arquivo vazio
-       // while{
+        cab.cont_reg = -1;
+        fwrite(&cab,sizeof(cab),1,dados);//prepara o arquivo vazio
 
-        //}
- 
+        while (passa_arq (campo, tam_camp, candidatos) > -1)
+        {
+            strcat(buffer, campo);
+            strcat(buffer, "|");
 
+            if (cont++ == 3){
+                fwrite(buffer, sizeof(char), COMP_REG, dados);
+                buffer[0] = 0;
+                cont = 0;
+            }
+        }
 
         //fread(&cab,sizeof(cab),1,candidatos);
         //fwrite(&candidatos,sizeof(char),COMP_REG,dados);
 
-    }else
-        fprintf(stderr, "Erro na abertura dos arquivos");
+    // }else
+    //     fprintf(stderr, "Erro na abertura dos arquivos");
 }
+
 
 int main(int argc, char *argv[]) {
 
-    
+
     char nome_arq[20];
-    // char buffer[COMP_REG + 1];
+    char tam_camp[COMP_REG - 4];
+   // char buffer[COMP_REG + 1];
     //char *campo;
 
-    
+
     if (argc == 3 && strcmp(argv[1], "-i") == 0) {
         printf("Informe o nome do arquivo de registros: ");
-        input(nome_arq, 20);       
+        input(nome_arq, 20);
         importacao(argv[2]);
-    
- } else if (argc == 3 && strcmp(argv[1], "-e") == 0) {
+
+    } else if (argc == 3 && strcmp(argv[1], "-e") == 0) {
 
         printf("Modo de execucao de operacoes ativado ... nome do arquivo = %s\n", argv[2]);
         // executa_operacoes(argv[2]);
